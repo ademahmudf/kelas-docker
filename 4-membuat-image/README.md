@@ -8,7 +8,7 @@ INSTRUCTION arguments
 ```
 Untuk membuat docker image untuk aplikasi todo-list, ikuti langkah-langkah berikut :
 
-1. Buat sebuah file bernama `Dockerfile` dengan konten seperti berikut.
+1. Buat sebuah file bernama `Dockerfile` di dalam folder app dengan konten seperti berikut.
 
     ```dockerfile
     FROM node:12-alpine
@@ -21,7 +21,7 @@ Untuk membuat docker image untuk aplikasi todo-list, ikuti langkah-langkah berik
 
     Pastikan file `Dockerfile` tidak memiliki extension `.txt`
 
-1. Build docker image menggunakan command `docker build` command.
+1. Masuk ke dalam folder app dan build docker image menggunakan command `docker build` command.
 
     ```bash
     docker build -t todo-list .
