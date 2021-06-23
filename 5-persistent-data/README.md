@@ -80,7 +80,8 @@ Tambahkan environment berikut pada saat menjalankan container todo-apps:
       -e MYSQL_USER=root \
       -e MYSQL_PASSWORD=Password1 \
       -e MYSQL_DB=todos \
-      ademahmudf/todo-app:v1
+      node:12-alpine \
+      sh -c "yarn install && yarn run dev"
     ```
 
 1. Cek log container (`docker logs <container-id>`)
@@ -109,6 +110,20 @@ Tambahkan environment berikut pada saat menjalankan container todo-apps:
     +--------------------------------------+--------------------+-----------+
     | id                                   | name               | completed |
     +--------------------------------------+--------------------+-----------+
-    | e8bba339-0c25-4559-896b-1d7d8211207d | Pertemuan 5 |         0 |
+    | e8bba339-0c25-4559-896b-1d7d8211207d | Pertemuan 5        |         0 |
     +--------------------------------------+--------------------+-----------+
     ```
+
+## OPTIONAL
+Kita juga bisa menjalankan container todo-app menggunakan image yang sudah kita buat di pertemuan sebelumnya.
+Untuk mencobanya, jalankan command berikut :
+```bash hl_lines="3 4 5 6 7"
+docker run -it -d --name todo-apps -p 3000:3000 \
+    --network todo_net \
+    -e MYSQL_HOST=mysql \
+    -e MYSQL_USER=root \
+    -e MYSQL_PASSWORD=Password1 \
+    -e MYSQL_DB=todos \
+    ademahmudf/todo-app:v1
+```
+Sesuaikan nama image sesuai dengan nama image masing-masing.
