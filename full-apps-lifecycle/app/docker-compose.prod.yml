@@ -1,0 +1,41 @@
+version: "3.3"
+services:
+  node-app:
+    ports: 
+        - 3000:3000
+    environment: 
+        - MYSQL_HOST=mysql 
+        - MYSQL_USER=root 
+        - MYSQL_PASSWORD=password12345
+        - MYSQL_DB=todoapp
+    deploy:
+        replicas: 2
+        restart_policy:
+            condition: on-failure
+        resources:
+            limits:
+                cpus: '0.50'
+                memory: 256M
+            reservations:
+                cpus: '0.10'
+                memory: 20M
+
+  mysql:
+    environment: 
+        - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql-pw
+        - MYSQL_DATABASE=todoapp
+    secrets:
+        - mysql-pw
+    volumes: 
+        - mysql-data:/var/lib/mysql
+    deploy:
+        replicas: 1
+        restart_policy:
+            condition: on-failure
+
+volumes: 
+    mysql-data:
+
+secrets:
+    mysql-pw:
+        file: mysql_pw.txt

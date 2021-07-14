@@ -1,0 +1,30 @@
+version: "3.3"
+services:
+  node-app:
+    build:
+        context: .
+    ports: 
+        - 3000:3000
+    volumes:
+        - ./src:/app/src
+    environment: 
+        - MYSQL_HOST=mysql 
+        - MYSQL_USER=root 
+        - MYSQL_PASSWORD=password12345
+        - MYSQL_DB=todoapp
+
+  mysql:
+    environment: 
+        - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql-pw
+        - MYSQL_DATABASE=todoapp
+    secrets:
+        - mysql-pw
+    volumes: 
+        - mysql-data:/var/lib/mysql
+
+volumes: 
+    mysql-data:
+
+secrets:
+    mysql-pw:
+        file: mysql_pw.txt

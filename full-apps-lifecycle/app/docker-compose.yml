@@ -1,0 +1,12 @@
+version: "3.3"
+services:
+  node-app:
+    image: ademahmudf/todo-app:v2
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:3000"]
+        interval: 1m30s
+        timeout: 10s
+        retries: 3
+
+  mysql:
+    image: mysql:5.7
