@@ -12,7 +12,6 @@ Untuk membuat docker image untuk aplikasi todo-list, ikuti langkah-langkah berik
 
     ```dockerfile
     FROM node:12-alpine
-    RUN apk add --no-cache python g++ make
     WORKDIR /app
     COPY . .
     RUN yarn install --production
