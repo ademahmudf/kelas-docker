@@ -8,14 +8,16 @@ pipeline {
   stages {
     stage('Prepare .env') {
       steps {
-        sh 'echo GIT_COMMIT_SHORT=$(echo $GIT_COMMIT_SHORT) > .env'
+        dir('4-membuat-image') {
+          sh 'echo GIT_COMMIT_SHORT=$(echo $GIT_COMMIT_SHORT) > .env'
+        }
       }
     }
 
 
     stage('Build backend') {
       steps {
-        dir('app') {
+        dir('4-membuat-image/app') {
           sh 'docker build . -t ademahmudf/todo-app:$GIT_COMMIT_SHORT'
           sh 'docker push ademahmudf/todo-app:$GIT_COMMIT_SHORT'
         }
