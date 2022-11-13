@@ -1,0 +1,35 @@
+pipeline {
+  agent any
+
+  environment {
+    GIT_COMMIT_SHORT = sh(returnStdout: true, script: '''echo $GIT_COMMIT | head -c 7''')
+  }
+
+  stages {
+    stage('Prepare .env') {
+      steps {
+        sh 'echo GIT_COMMIT_SHORT=$(echo $GIT_COMMIT_SHORT) > .env'
+      }
+    }
+
+
+    stage('Build backend') {
+      steps {
+        dir('app') {
+          sh 'docker build . -t ademahmudf/todo-app:$GIT_COMMIT_SHORT'
+          sh 'docker push ademahmudf/todo-app:$GIT_COMMIT_SHORT'
+        }
+      }
+    }
+
+    stage('Deploy to remote server') {
+      steps {
+        sshPublisher(publishers: [sshPublisherDesc(configName: 'app-demo', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''cd 4-membuat-image && docker compose up -d
+        
+        sleep 40
+
+        docker compose restart todo-app''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '.env,docker-compose.yaml')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+      }
+    }
+  }
+}
