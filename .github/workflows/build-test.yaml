@@ -18,6 +18,8 @@ jobs:
       with:
         node-version: '14'
     - name: Install project
+      working-directory: 4-membuat-image/app
       run: npm install
     - name: Test project
+      working-directory: 4-membuat-image/app
       run: npm test
