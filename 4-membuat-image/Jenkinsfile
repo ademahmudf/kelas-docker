@@ -24,11 +24,9 @@ pipeline {
 
     stage('Deploy to remote server') {
       steps {
-        sshPublisher(publishers: [sshPublisherDesc(configName: 'app-demo', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''cd 4-membuat-image && docker compose up -d
-        
-        sleep 40
-
-        docker compose restart todo-app''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '.env,docker-compose.yaml')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+        sshPublisher(publishers: [sshPublisherDesc(configName: 'app-demo', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''cd 4-membuat-image
+        sleep 30
+        docker compose up -d''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '4-membuat-image/docker-compose.yaml,4-membuat-image/.env')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
       }
     }
   }
